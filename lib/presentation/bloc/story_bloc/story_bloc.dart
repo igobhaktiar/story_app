@@ -29,6 +29,14 @@ class StoryBloc extends Bloc<StoryEvent, StoryState> {
           } else {
             emit(StoryLoaded(stories));
           }
+        } else if (event is StoryUpdateEvent) {
+          emit(StoryLoading());
+          StoryModel? story = await storyUseCase.updateStory(event.story);
+          if (story.userId != null) {
+            emit(StoryUpdated(story));
+          } else {
+            emit(StoryError('Failed to update story'));
+          }
         }
       } catch (e) {
         emit(StoryError(e.toString()));

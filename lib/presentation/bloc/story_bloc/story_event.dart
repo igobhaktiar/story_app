@@ -10,3 +10,9 @@ class StoryByUserEvent extends StoryEvent {
 
   StoryByUserEvent(this.userId);
 }
+
+class StoryUpdateEvent extends StoryEvent {
+  final StoryModel story;
+
+  StoryUpdateEvent(this.story);
+}

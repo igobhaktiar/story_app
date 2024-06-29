@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:my_story_app/core/utils/colors.dart';
+import 'package:my_story_app/core/utils/text_format.dart';
+import 'package:my_story_app/data/model/story_model.dart';
 
 import '../../../core/utils/text_style.dart';
 
 class StoryListItems extends StatelessWidget {
   const StoryListItems({
     super.key,
+    required this.data,
   });
+
+  final StoryModel? data;
 
   @override
   Widget build(BuildContext context) {
@@ -31,26 +35,26 @@ class StoryListItems extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Lorem Ipsum Dolor Sit Amet',
+                data?.title ?? '',
                 style: cardTitleTextStyle,
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc. '
-                'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; ',
+            data?.story ?? '',
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: subtitleTextStyle,
           ),
           const SizedBox(height: 8),
           Text(
-            'By: John Doe',
+            'By: ${data?.writer ?? ''}',
             style: cardBodyTextStyle,
           ),
           const SizedBox(height: 8),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
@@ -61,12 +65,11 @@ class StoryListItems extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Saturday, 12 June 2021',
+                    data != null ? formatDate(data!.createdAt) : '',
                     style: cardBodyTextStyle,
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
               Row(
                 children: [
                   const Icon(
@@ -76,7 +79,21 @@ class StoryListItems extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '100 Likes',
+                    data?.like.toString() ?? '',
+                    style: cardBodyTextStyle,
+                  ),
+                  const SizedBox(width: 16),
+                ],
+              ),
+              Row(
+                children: [
+                  const Icon(
+                    CupertinoIcons.chat_bubble,
+                    color: ColorsAssets.white,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 4),
+                  Text( data?.comments?.length.toString() ?? '',
                     style: cardBodyTextStyle,
                   ),
                 ],

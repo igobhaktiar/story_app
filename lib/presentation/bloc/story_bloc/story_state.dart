@@ -18,3 +18,21 @@ final class StoryError extends StoryState {
 
   StoryError(this.message);
 }
+
+final class StoryUpdated extends StoryState {
+  final StoryModel story;
+
+  StoryUpdated(this.story);
+}
+
+final class StoryDeleted extends StoryState {
+  final StoryModel story;
+
+  StoryDeleted(this.story);
+}
+
+final class StoryCreated extends StoryState {
+  final StoryModel story;
+
+  StoryCreated(this.story);
+}

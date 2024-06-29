@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/presentation/main_screen.dart';
+import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
 import 'package:my_story_app/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_story_app/presentation/bloc/story_bloc/story_bloc.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         Routes.main: (context) => const MainScreen(),
+        Routes.storyDetail: (context) => const DetailsStoryScreen(),
       },
     );
   }

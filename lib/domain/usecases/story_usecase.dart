@@ -12,4 +12,8 @@ class StoryUseCase {
   Future<List<StoryModel>> getUserStories(String userId) {
     return storyRepository.getUserStories(userId);
   }
+
+  Future<StoryModel> updateStory(StoryModel story) {
+    return storyRepository.updateStory(story);
+  }
 }

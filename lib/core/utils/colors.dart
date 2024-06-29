@@ -16,5 +16,7 @@ class ColorsAssets {
   static const Color night = Color(0xFF141214);
   static const Color wenge = Color(0xFF5B5261);
   static const Color raisinBlack = Color(0xFF29222D);
+  static const Color failed = Color(0xFFD32F2F);
+  static const Color success = Color(0xFF4CAF50);
 
 }

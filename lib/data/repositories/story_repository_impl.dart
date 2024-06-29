@@ -4,7 +4,8 @@ import 'package:my_story_app/domain/repositories/story_repository.dart';
 import 'package:get_it/get_it.dart';
 
 class StoryRepositoryImpl implements StoryRepository {
-  final NetworkStoryDataSource networkStoryDataSource = GetIt.I<NetworkStoryDataSource>();
+  final NetworkStoryDataSource networkStoryDataSource =
+      GetIt.I<NetworkStoryDataSource>();
 
   @override
   Future<List<StoryModel>> getStories() {
@@ -15,5 +16,9 @@ class StoryRepositoryImpl implements StoryRepository {
   Future<List<StoryModel>> getUserStories(String userId) {
     return networkStoryDataSource.getUserStories(userId);
   }
-  
+
+  @override
+  Future<StoryModel> updateStory(StoryModel story) {
+    return networkStoryDataSource.updateStory(story);
+  }
 }
