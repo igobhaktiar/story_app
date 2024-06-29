@@ -33,7 +33,7 @@ TextStyle inputTextStyle = const TextStyle(
 );
 
 TextStyle hintTextStyle = const TextStyle(
-  color: ColorsAssets.white,
+  color: ColorsAssets.grey,
   fontSize: 16,
   fontWeight: FontWeight.w400,
 );

@@ -35,21 +35,21 @@ class StoryListItems extends StatelessWidget {
           Row(
             children: [
               Text(
-                data?.title ?? '',
+                data?.title ?? 'Lorem Ipsum',
                 style: cardTitleTextStyle,
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            data?.story ?? '',
+            data?.story ?? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.',
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             style: subtitleTextStyle,
           ),
           const SizedBox(height: 8),
           Text(
-            'By: ${data?.writer ?? ''}',
+            'By: ${data?.writer ?? 'Lorem Ipsum'}',
             style: cardBodyTextStyle,
           ),
           const SizedBox(height: 8),
@@ -65,7 +65,7 @@ class StoryListItems extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    data != null ? formatDate(data!.createdAt) : '',
+                    data != null ? formatDate(data!.createdAt) : 'Saturday, 12 June 2021',
                     style: cardBodyTextStyle,
                   ),
                 ],
@@ -79,7 +79,7 @@ class StoryListItems extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    data?.like.toString() ?? '',
+                    data?.like.toString() ?? '1212',
                     style: cardBodyTextStyle,
                   ),
                   const SizedBox(width: 16),
@@ -93,7 +93,7 @@ class StoryListItems extends StatelessWidget {
                     size: 16,
                   ),
                   const SizedBox(width: 4),
-                  Text( data?.comments?.length.toString() ?? '',
+                  Text( data?.comments?.length.toString() ?? '1212',
                     style: cardBodyTextStyle,
                   ),
                 ],

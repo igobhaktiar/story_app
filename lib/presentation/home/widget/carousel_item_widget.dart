@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_story_app/data/model/story_model.dart';
+import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
 
 import '../../../core/utils/colors.dart';
 
@@ -38,7 +39,8 @@ class CarouselItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 color: ColorsAssets.white,
                 image: DecorationImage(
-                  image: NetworkImage(storyModel?.images ?? 'https://via.placeholder.com/150'),
+                  image: NetworkImage(
+                      storyModel?.images ?? 'https://via.placeholder.com/150'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -48,7 +50,7 @@ class CarouselItemWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(
+                  Text(
                     storyModel?.title ?? '',
                     style: const TextStyle(
                       color: ColorsAssets.white,
@@ -57,7 +59,7 @@ class CarouselItemWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                   Text(
+                  Text(
                     storyModel?.story ?? '',
                     style: const TextStyle(
                       color: ColorsAssets.white,
@@ -66,7 +68,7 @@ class CarouselItemWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                   Text(
+                  Text(
                     'By ${storyModel?.writer}',
                     style: const TextStyle(
                       color: ColorsAssets.white,
@@ -76,7 +78,15 @@ class CarouselItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsStoryScreen(storyModel: storyModel),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorsAssets.white,
                       shape: RoundedRectangleBorder(

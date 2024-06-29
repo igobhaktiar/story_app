@@ -21,6 +21,9 @@ class TfCustomWidget extends StatelessWidget {
       child: TextFormField(
         style: inputTextStyle,
         controller: _nameController,
+        maxLines: 10,
+        minLines: 1,
+
         decoration: InputDecoration(
           hintText: text,
           hintStyle: hintTextStyle,

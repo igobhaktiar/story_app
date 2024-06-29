@@ -61,34 +61,16 @@ class _MainScreenState extends State<MainScreen> {
       listeners: [
         BlocListener<StoryBloc, StoryState>(
           listener: (context, state) {
-            if (state is StoryLoading) {
-              toastWidget(
-                message: 'Loading...',
-                color: ColorsAssets.night,
-                textColor: Colors.white,
-              );
-            } else if (state is StoryError) {
+            if (state is StoryError) {
               toastWidget(
                 message: state.message,
                 color: ColorsAssets.failed,
                 textColor: Colors.white,
               );
-            } else if (state is StoryCreated) {
-              toastWidget(
-                message: 'Story Created',
-                color: ColorsAssets.success,
-                textColor: Colors.white,
-              );
             } else if (state is StoryUpdated) {
               context.read<StoryBloc>().add(StoryFetchEvent());
               toastWidget(
-                message: 'Story Updated',
-                color: ColorsAssets.success,
-                textColor: Colors.white,
-              );
-            } else if (state is StoryDeleted) {
-              toastWidget(
-                message: 'Story Deleted',
+                message: 'Success',
                 color: ColorsAssets.success,
                 textColor: Colors.white,
               );

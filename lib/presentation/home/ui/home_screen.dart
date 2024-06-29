@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const SizedBox(height: 40),
                   Text(
-                    'Welcome to My Story App',
+                    'Write Your Story !',
                     style: titleTextStyle,
                   ),
                   const SizedBox(height: 8),
@@ -118,15 +118,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    'New Stories',
-                    style: cardTitleTextStyle,
+                  Row(
+                    children: [
+                      Text(
+                        'New Stories',
+                        style: cardTitleTextStyle,
+                      ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/story');
+                        },
+                        child: Text(
+                          'View All',
+                          style: cardBodyTextStyle,
+                        ),
+                      ),
+                    ],
                   ),
                   Skeletonizer(
                     enabled: state is StoryLoading,
                     child: SizedBox(
                       child: ListView.builder(
-                        itemCount: _newStories?.length ?? 5,
+                        itemCount: 5,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
