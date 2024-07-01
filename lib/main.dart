@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/presentation/main_screen.dart';
-import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
+import 'package:my_story_app/presentation/splash/ui/splash_screen.dart';
+import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_story_app/presentation/bloc/story_bloc/story_bloc.dart';
-
 import 'app_dependency_injection.dart';
+import 'presentation/splash/bloc/splash_bloc.dart';
 
 void main() {
   AppDependencyInjection.setup();
@@ -17,6 +17,9 @@ void main() {
       providers: [
         BlocProvider<StoryBloc>(
           create: (context) => GetIt.I.get<StoryBloc>()..add(StoryFetchEvent()),
+        ),
+        BlocProvider<SplashBloc>(
+          create: (context) => GetIt.I.get<SplashBloc>()..add(SplashStart()),
         ),
       ],
       child: const MyApp(),
@@ -37,10 +40,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: Routes.splash,
       routes: {
+        Routes.splash: (context) => const SplashScreen(),
         Routes.main: (context) => const MainScreen(),
-        Routes.storyDetail: (context) => const DetailsStoryScreen(),
       },
     );
   }

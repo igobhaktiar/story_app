@@ -4,12 +4,16 @@ class UserModel {
     String? name,
     String? avatar,
     String? email,
+    String? username,
+    String? password,
     String? id,
   }) {
     _createdAt = createdAt;
     _name = name;
     _avatar = avatar;
     _email = email;
+    _username = username;
+    _password = password;
     _id = id;
   }
 
@@ -18,6 +22,8 @@ class UserModel {
     _name = json['name'];
     _avatar = json['avatar'];
     _email = json['email'];
+    _username = json['username'];
+    _password = json['password'];
     _id = json['id'];
   }
 
@@ -25,6 +31,8 @@ class UserModel {
   String? _name;
   String? _avatar;
   String? _email;
+  String? _username;
+  String? _password;
   String? _id;
 
   UserModel copyWith({
@@ -32,6 +40,8 @@ class UserModel {
     String? name,
     String? avatar,
     String? email,
+    String? username,
+    String? password,
     String? id,
   }) =>
       UserModel(
@@ -39,6 +49,8 @@ class UserModel {
         name: name ?? _name,
         avatar: avatar ?? _avatar,
         email: email ?? _email,
+        username: username ?? _username,
+        password: password ?? _password,
         id: id ?? _id,
       );
 
@@ -50,6 +62,10 @@ class UserModel {
 
   String? get email => _email;
 
+  String? get username => _username;
+
+  String? get password => _password;
+
   String? get id => _id;
 
   Map<String, dynamic> toJson() {
@@ -58,6 +74,8 @@ class UserModel {
     map['name'] = _name;
     map['avatar'] = _avatar;
     map['email'] = _email;
+    map['username'] = _username;
+    map['password'] = _password;
     map['id'] = _id;
     return map;
   }

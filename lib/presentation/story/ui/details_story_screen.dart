@@ -5,7 +5,7 @@ import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/core/utils/text_format.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:my_story_app/data/model/story_model.dart';
-import 'package:my_story_app/presentation/bloc/story_bloc/story_bloc.dart';
+import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../widget/tf_custom_widget.dart';

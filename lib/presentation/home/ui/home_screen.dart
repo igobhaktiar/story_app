@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:my_story_app/data/model/story_model.dart';
-import 'package:my_story_app/presentation/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/presentation/home/widget/carousel_item_widget.dart';
 import 'package:my_story_app/presentation/home/widget/story_list_items.dart';
+import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
