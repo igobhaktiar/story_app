@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_story_app/core/utils/colors.dart';
+import 'package:my_story_app/presentation/login/ui/login_screen.dart';
 import 'package:my_story_app/presentation/main_screen.dart';
+import 'package:my_story_app/presentation/register/ui/register_screen.dart';
 import 'package:my_story_app/presentation/splash/ui/splash_screen.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/routes.dart';
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.splash: (context) => const SplashScreen(),
         Routes.main: (context) => const MainScreen(),
+        Routes.login: (context) => const LoginScreen(),
+        Routes.register: (context) => const RegisterScreen(),
       },
     );
   }
