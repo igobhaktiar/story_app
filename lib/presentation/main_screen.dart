@@ -19,8 +19,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
+  // Define the controller
   int controller = 0;
 
+  // Define the bottom navigation bar items
   final List<DotNavigationBarItem> _bottomNavigationBarItems = [
     DotNavigationBarItem(
       icon: const Icon(FluentIcons.home_24_regular),
@@ -40,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     ),
   ];
 
+  // Define the pages
   List<Widget> _pages() {
     return [
       const HomeScreen(),
@@ -49,10 +53,16 @@ class _MainScreenState extends State<MainScreen> {
     ];
   }
 
+  // Handle the bottom navigation bar item tap
   void _onItemTapped(int index) {
     setState(() {
       controller = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override

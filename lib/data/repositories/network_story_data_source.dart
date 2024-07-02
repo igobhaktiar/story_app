@@ -10,7 +10,6 @@ class NetworkStoryDataSource {
 
   Future<List<StoryModel>> getStories() async {
     var response = await dio.get('$baseUrl/storylist');
-
     if (response.statusCode == 200) {
       List<StoryModel> storyModel = response.data
           .map<StoryModel>((item) => StoryModel.fromJson(item))
@@ -53,7 +52,7 @@ class NetworkStoryDataSource {
 
     var response = await dio.put(url, data: body);
     if (response.statusCode == 200) {
-      return StoryModel.fromJson(jsonDecode(response.data));
+      return StoryModel.fromJson(response.data);
     } else {
       throw Exception('Failed to update story');
     }

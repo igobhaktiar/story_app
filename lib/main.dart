@@ -11,6 +11,7 @@ import 'presentation/splash/bloc/splash_bloc.dart';
 
 void main() {
   AppDependencyInjection.setup();
+  final SplashBloc splashBloc = GetIt.I.get<SplashBloc>();
 
   runApp(
     MultiBlocProvider(
@@ -19,7 +20,7 @@ void main() {
           create: (context) => GetIt.I.get<StoryBloc>()..add(StoryFetchEvent()),
         ),
         BlocProvider<SplashBloc>(
-          create: (context) => GetIt.I.get<SplashBloc>()..add(SplashStart()),
+          create: (context) => splashBloc..add(SplashStart()),
         ),
       ],
       child: const MyApp(),

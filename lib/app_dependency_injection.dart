@@ -11,14 +11,16 @@ class AppDependencyInjection {
   static void setup() {
     //DataSource
     GetIt.I.registerLazySingleton<NetworkStoryDataSource>(
-        () => NetworkStoryDataSource(GetIt.instance.get()));
+        () => NetworkStoryDataSource(GetIt.I.get<Dio>()));
+
     GetIt.I.registerLazySingleton<Dio>(() => Dio());
     // Repository
     GetIt.I.registerLazySingleton<StoryRepository>(() => StoryRepositoryImpl());
     // UseCase
     GetIt.I.registerLazySingleton<StoryUseCase>(() => StoryUseCase());
     // Bloc
-    GetIt.I.registerFactory<StoryBloc>(() => StoryBloc(GetIt.instance.get()));
+    GetIt.I.registerFactory<StoryBloc>(
+        () => StoryBloc(GetIt.I.get<StoryUseCase>()));
 
     GetIt.I.registerFactory<SplashBloc>(() => SplashBloc());
   }
