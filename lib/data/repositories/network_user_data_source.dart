@@ -19,4 +19,18 @@ class NetworkUserDataSource {
       return [];
     }
   }
+
+  Future<List<UserModel>> loginUser(String username, String password) async {
+    var response =
+        await dio.get('$baseUrl/users?username=$username&password=$password');
+
+    if (response.statusCode == 200) {
+      List<UserModel> userModel = response.data
+          .map<UserModel>((item) => UserModel.fromJson(item))
+          .toList();
+      return userModel;
+    } else {
+      return [];
+    }
+  }
 }

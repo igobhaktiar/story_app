@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_story_app/core/utils/colors.dart';
+import 'package:my_story_app/presentation/login/bloc/login_bloc.dart';
 import 'package:my_story_app/presentation/login/ui/login_screen.dart';
 import 'package:my_story_app/presentation/main_screen.dart';
 import 'package:my_story_app/presentation/register/ui/register_screen.dart';
@@ -23,6 +24,9 @@ void main() {
         ),
         BlocProvider<SplashBloc>(
           create: (context) => splashBloc..add(SplashStart()),
+        ),
+        BlocProvider<LoginBloc>(
+          create: (context) => GetIt.I.get<LoginBloc>(),
         ),
       ],
       child: const MyApp(),
