@@ -15,4 +15,24 @@ class UserUseCase {
   }) {
     return _userRepository.loginUser(username: username, password: password);
   }
+
+  Future<void> saveUserData(UserModel userModel) {
+    return _userRepository.saveUserData(userModel);
+  }
+
+  Future<UserModel> getUserData() {
+    return _userRepository.getUserData();
+  }
+
+  Future<void> setLoginState(bool isLoggedIn) {
+    return _userRepository.setLoginState(isLoggedIn);
+  }
+
+  Future<bool> getLoginState() {
+    return _userRepository.getLoginState();
+  }
+
+  Future<void> clearUserData() {
+    return _userRepository.clearUserData();
+  }
 }

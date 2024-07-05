@@ -5,6 +5,8 @@ import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/core/utils/text_format.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:my_story_app/data/model/story_model.dart';
+import 'package:my_story_app/data/model/user_model.dart';
+import 'package:my_story_app/domain/usecases/user_usecase.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -21,11 +23,21 @@ class DetailsStoryScreen extends StatefulWidget {
 
 class _DetailsStoryScreenState extends State<DetailsStoryScreen> {
   final TextEditingController _commentController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
 
   List<Comments>? comments;
+  UserModel? user;
 
   final _commentFormKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    userData();
+    super.initState();
+  }
+
+  void userData() async {
+    user = await UserUseCase().getUserData();
+  }
 
   void _blocHandler(StoryState state) {
     if (state is StoryLoaded) {
@@ -38,7 +50,7 @@ class _DetailsStoryScreenState extends State<DetailsStoryScreen> {
   void _addComment() {
     if (_commentFormKey.currentState?.validate() ?? false) {
       var comment = Comments(
-        name: _nameController.text,
+        name: user?.name,
         commentReader: _commentController.text,
       );
       comments?.add(comment);
@@ -53,8 +65,7 @@ class _DetailsStoryScreenState extends State<DetailsStoryScreen> {
             images: widget.storyModel?.images,
             comments: comments,
           )));
-      _commentController.clear();
-      _nameController.clear();
+
     }
   }
 
@@ -256,22 +267,10 @@ class _DetailsStoryScreenState extends State<DetailsStoryScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 16),
                           Text(
                             'Add Comment',
                             style: subtitleTextStyle,
-                          ),
-                          const SizedBox(height: 8),
-                          TfCustomWidget(
-                            nameController: _nameController,
-                            text: 'Name',
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Name is required';
-                              }
-                              return null;
-                            },
-                            height: 80,
                           ),
                           const SizedBox(height: 8),
                           TfCustomWidget(
@@ -283,20 +282,42 @@ class _DetailsStoryScreenState extends State<DetailsStoryScreen> {
                               }
                               return null;
                             },
-                            height: 80,
+                            height: _commentFormKey.currentState
+                                        ?.validate() ==
+                                    false
+                                ? 75
+                                : 50,
                           ),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: _addComment,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorsAssets.secondary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: _addComment,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: ColorsAssets.secondary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              'Comment',
-                              style: buttonTextStyle,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    CupertinoIcons.paperplane_fill,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    'Send',
+                                    style: cardBodyTextStyle.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

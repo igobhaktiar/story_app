@@ -1,13 +1,13 @@
-part of 'login_bloc.dart';
+part of 'user_bloc.dart';
 
 @immutable
-sealed class LoginEvent {}
+sealed class UserEvent {}
 
-class LoginButtonPressed extends LoginEvent {
+class UserLogin extends UserEvent {
   final String username;
   final String password;
 
-  LoginButtonPressed({
+  UserLogin({
     required this.username,
     required this.password,
   });

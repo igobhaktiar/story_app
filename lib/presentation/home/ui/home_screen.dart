@@ -5,11 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:my_story_app/data/model/story_model.dart';
+import 'package:my_story_app/data/model/user_model.dart';
+import 'package:my_story_app/domain/usecases/user_usecase.dart';
 import 'package:my_story_app/presentation/home/widget/carousel_item_widget.dart';
 import 'package:my_story_app/presentation/home/widget/story_list_items.dart';
-import 'package:my_story_app/presentation/login/bloc/login_bloc.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
+import 'package:my_story_app/presentation/user/bloc/user_bloc.dart';
+import 'package:my_story_app/presentation/user/ui/profile_screen.dart';
 import 'package:my_story_app/routes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -22,6 +25,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _current = 0;
+  UserModel? user;
+  bool? isLogin;
 
   // data
   List<StoryModel>? _topStories;
@@ -29,7 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _userData();
     super.initState();
+  }
+
+  void _userData() async {
+    user = await UserUseCase().getUserData();
+    isLogin = await UserUseCase().getLoginState();
+    setState(() {});
   }
 
   void _storyHandler(StoryState state) {
@@ -39,6 +51,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
       _newStories = state.stories;
       _newStories?.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    }
+  }
+
+  void _onPressed() {
+    if (isLogin == true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfileScreen(user: user),
+        ),
+      );
+    } else {
+      Navigator.pushNamed(context, Routes.login);
     }
   }
 
@@ -87,45 +112,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const Spacer(),
-                          BlocBuilder<LoginBloc, LoginState>(
-                            builder: (context, state) {
-                              if (state is LoginSuccess) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, Routes.login);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration:  BoxDecoration(
-                                      color: ColorsAssets.white,
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: NetworkImage(state.user.first.avatar!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, Routes.login);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: const BoxDecoration(
+                          GestureDetector(
+                            onTap: _onPressed,
+                            child: BlocBuilder<UserBloc, UserState>(
+                              builder: (context, state) {
+                                _userData();
+                                return Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
                                     color: ColorsAssets.white,
                                     shape: BoxShape.circle,
+                                    image: isLogin == true
+                                        ? DecorationImage(
+                                      image: NetworkImage(user?.avatar ?? ''),
+                                      fit: BoxFit.cover,
+                                    )
+                                        : null,
                                   ),
-                                  child: const Icon(
+                                  child: isLogin == false
+                                      ? const Icon(
                                     FluentIcons.person_24_regular,
                                     color: ColorsAssets.primary,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
+                                  )
+                                      : null,
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 24),

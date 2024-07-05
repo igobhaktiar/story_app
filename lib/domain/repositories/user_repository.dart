@@ -7,4 +7,14 @@ abstract class UserRepository {
     required String username,
     required String password,
   });
+
+  Future<void> saveUserData(UserModel userModel);
+
+  Future<UserModel> getUserData();
+
+  Future<void> setLoginState(bool isLoggedIn);
+
+  Future<bool> getLoginState();
+
+  Future<void> clearUserData();
 }

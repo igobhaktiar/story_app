@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/presentation/widget/tf_custom_widget.dart';
 import 'package:my_story_app/routes.dart';
 
-import '../bloc/login_bloc.dart';
+import '../bloc/user_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,8 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() {
     if (_formKey.currentState?.validate() == true) {
-      BlocProvider.of<LoginBloc>(context).add(
-        LoginButtonPressed(
+      BlocProvider.of<UserBloc>(context).add(
+        UserLogin(
           username: _usernameController.text,
           password: _passwordController.text,
         ),
@@ -31,16 +32,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushNamed(context, Routes.main);
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.main, (route) => false);
         } else if (state is LoginFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: ColorsAssets.failed
-            ),
+          Fluttertoast.showToast(
+            msg: 'Login failed',
+            backgroundColor: ColorsAssets.failed,
+            textColor: ColorsAssets.white,
           );
         }
       },
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         nameController: _usernameController,
                         text: 'Username',
                         height:
-                        _formKey.currentState?.validate() == true ? 50 : 80,
+                            _formKey.currentState?.validate() == true ? 50 : 80,
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter your username';
@@ -107,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         nameController: _passwordController,
                         text: 'Password',
                         height:
-                        _formKey.currentState?.validate() == true ? 50 : 80,
+                            _formKey.currentState?.validate() == true ? 50 : 80,
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter your password';
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      BlocBuilder<LoginBloc, LoginState>(
+                      BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
                           if (state is LoginLoading) {
                             return const CircularProgressIndicator();

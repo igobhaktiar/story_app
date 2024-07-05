@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 
@@ -18,6 +17,12 @@ TextStyle bodyTextStyle = const TextStyle(
   color: ColorsAssets.white,
   fontSize: 14,
   fontWeight: FontWeight.w400,
+);
+
+TextStyle appBarTitleTextStyle = const TextStyle(
+  color: ColorsAssets.white,
+  fontSize: 20,
+  fontWeight: FontWeight.w500,
 );
 
 TextStyle buttonTextStyle = const TextStyle(
