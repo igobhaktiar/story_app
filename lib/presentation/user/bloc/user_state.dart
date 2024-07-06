@@ -18,3 +18,17 @@ final class LoginFailure extends UserState {
 
   LoginFailure({required this.message});
 }
+
+final class RegisterLoading extends UserState {}
+
+final class RegisterSuccess extends UserState {
+  final UserModel user;
+
+  RegisterSuccess({required this.user});
+}
+
+final class RegisterFailure extends UserState {
+  final String message;
+
+  RegisterFailure({required this.message});
+}

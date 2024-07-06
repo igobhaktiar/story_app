@@ -16,6 +16,20 @@ class UserUseCase {
     return _userRepository.loginUser(username: username, password: password);
   }
 
+  Future<UserModel?> registerUser({
+    required String name,
+    required String email,
+    required String username,
+    required String password,
+  }) {
+    return _userRepository.registerUser(
+      name: name,
+      email: email,
+      username: username,
+      password: password,
+    );
+  }
+
   Future<void> saveUserData(UserModel userModel) {
     return _userRepository.saveUserData(userModel);
   }

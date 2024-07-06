@@ -8,6 +8,13 @@ abstract class UserRepository {
     required String password,
   });
 
+  Future<UserModel?> registerUser({
+    required String name,
+    required String email,
+    required String username,
+    required String password,
+  });
+
   Future<void> saveUserData(UserModel userModel);
 
   Future<UserModel> getUserData();

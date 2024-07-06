@@ -26,6 +26,21 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<UserModel?> registerUser({
+    required String name,
+    required String email,
+    required String username,
+    required String password,
+  }) {
+    return networkUserDataSource.registerUser(
+      name: name,
+      email: email,
+      username: username,
+      password: password,
+    );
+  }
+
+  @override
   Future<void> saveUserData(UserModel userModel) {
     return localUserDataSource.saveUserData(userModel);
   }

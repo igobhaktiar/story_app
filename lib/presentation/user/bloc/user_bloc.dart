@@ -31,6 +31,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         } catch (e) {
           emit(LoginFailure(message: e.toString()));
         }
+      } else if (event is UserRegister) {
+        try {
+          emit(RegisterLoading());
+          final UserModel? user = await userUseCase.registerUser(
+            name: event.name,
+            email: event.email,
+            username: event.username,
+            password: event.password,
+          );
+          if (user == null) {
+            emit(RegisterFailure(message: 'User not found'));
+            return;
+          } else {
+            userUseCase.saveUserData(user);
+            userUseCase.setLoginState(true);
+            emit(RegisterSuccess(user: user));
+          }
+        } catch (e) {
+          emit(RegisterFailure(message: e.toString()));
+        }
       }
     });
   }

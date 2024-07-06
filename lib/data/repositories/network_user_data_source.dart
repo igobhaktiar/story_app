@@ -33,4 +33,24 @@ class NetworkUserDataSource {
       return [];
     }
   }
+
+  Future<UserModel?> registerUser({
+    required String name,
+    required String email,
+    required String username,
+    required String password,
+  }) async {
+    var response = await dio.post('$baseUrl/users', data: {
+      'name': name,
+      'email': email,
+      'username': username,
+      'password': password,
+    });
+
+    if (response.statusCode == 201) {
+      return UserModel.fromJson(response.data);
+    } else {
+      return null;
+    }
+  }
 }
