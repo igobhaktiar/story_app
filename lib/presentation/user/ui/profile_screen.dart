@@ -5,10 +5,28 @@ import 'package:my_story_app/data/model/user_model.dart';
 import 'package:my_story_app/domain/usecases/user_usecase.dart';
 import 'package:my_story_app/routes.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key, this.user});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
-  final UserModel? user;
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  UserModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserData();
+  }
+
+  void _getUserData() async {
+    final UserModel userData = await UserUseCase().getUserData();
+    setState(() {
+      user = userData;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

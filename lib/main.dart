@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_story_app/core/utils/colors.dart';
+import 'package:my_story_app/presentation/search/ui/search_scren.dart';
 import 'package:my_story_app/presentation/user/bloc/user_bloc.dart';
 import 'package:my_story_app/presentation/user/ui/login_screen.dart';
 import 'package:my_story_app/presentation/main_screen.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         Routes.login: (context) => const LoginScreen(),
         Routes.register: (context) => const RegisterScreen(),
         Routes.profile: (context) => const ProfileScreen(),
+        Routes.search: (context) => const SearchScreen(),
       },
     );
   }

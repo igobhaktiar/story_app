@@ -3,11 +3,11 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_story_app/core/utils/colors.dart';
-import 'package:my_story_app/presentation/search/ui/search_scren.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
-import 'package:my_story_app/presentation/story/ui/story_screen.dart';
+import 'package:my_story_app/presentation/story/ui/my_story_screen.dart';
+import 'package:my_story_app/presentation/user/ui/profile_screen.dart';
 import 'package:my_story_app/presentation/widget/toast_widget.dart';
-import 'package:my_story_app/presentation/write/ui/write_screen.dart';
+import 'package:my_story_app/presentation/story/ui/write_story_screen.dart';
 
 import 'home/ui/home_screen.dart';
 
@@ -19,7 +19,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   // Define the controller
   int controller = 0;
 
@@ -34,11 +33,11 @@ class _MainScreenState extends State<MainScreen> {
       selectedColor: Colors.white,
     ),
     DotNavigationBarItem(
-      icon: const Icon(FluentIcons.search_24_regular),
+      icon: const Icon(FluentIcons.book_24_regular),
       selectedColor: Colors.white,
     ),
     DotNavigationBarItem(
-      icon: const Icon(FluentIcons.book_24_regular),
+      icon: const Icon(FluentIcons.person_24_regular),
       selectedColor: Colors.white,
     ),
   ];
@@ -47,9 +46,9 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _pages() {
     return [
       const HomeScreen(),
-      const WriteScreen(),
-      const SearchScreen(),
-      const StoryScreen(),
+      const WriteStoryScreen(),
+      const MyStoryScreen(),
+      const ProfileScreen(),
     ];
   }
 

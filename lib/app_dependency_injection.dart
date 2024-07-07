@@ -10,7 +10,6 @@ import 'package:my_story_app/data/repositories/network_story_data_source.dart';
 import 'package:my_story_app/presentation/user/bloc/user_bloc.dart';
 import 'package:my_story_app/presentation/splash/bloc/splash_bloc.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/repositories/user_repository_impl.dart';
 import 'domain/usecases/user_usecase.dart';

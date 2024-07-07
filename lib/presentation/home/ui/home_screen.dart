@@ -11,8 +11,6 @@ import 'package:my_story_app/presentation/home/widget/carousel_item_widget.dart'
 import 'package:my_story_app/presentation/home/widget/story_list_items.dart';
 import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
-import 'package:my_story_app/presentation/user/bloc/user_bloc.dart';
-import 'package:my_story_app/presentation/user/ui/profile_screen.dart';
 import 'package:my_story_app/routes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -55,16 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onPressed() {
-    if (isLogin == true) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfileScreen(user: user),
-        ),
-      );
-    } else {
-      Navigator.pushNamed(context, Routes.login);
-    }
+    Navigator.pushNamed(context, Routes.search);
   }
 
   @override
@@ -98,48 +87,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 40),
                       Row(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Write Your Story !',
-                                style: titleTextStyle,
-                              ),
-                              Text(
-                                'This is a simple app to write your story',
-                                style: subtitleTextStyle,
-                              ),
-                            ],
+                          Text(
+                            'Welcome to My Story App',
+                            style: subtitleTextStyle,
                           ),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: _onPressed,
-                            child: BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-                                _userData();
-                                return Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: ColorsAssets.white,
-                                    shape: BoxShape.circle,
-                                    image: isLogin == true
-                                        ? DecorationImage(
-                                      image: NetworkImage(user?.avatar ?? ''),
-                                      fit: BoxFit.cover,
-                                    )
-                                        : null,
-                                  ),
-                                  child: isLogin == false
-                                      ? const Icon(
-                                    FluentIcons.person_24_regular,
-                                    color: ColorsAssets.primary,
-                                  )
-                                      : null,
-                                );
-                              },
+                          IconButton(
+                            onPressed: _onPressed,
+                            icon: const Icon(
+                              FluentIcons.search_24_filled,
+                              color: ColorsAssets.white,
                             ),
-                          ),
+                          )
                         ],
                       ),
                       const SizedBox(height: 24),
@@ -166,13 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             autoPlay: true,
                             autoPlayInterval: const Duration(seconds: 10),
                             autoPlayAnimationDuration:
-                            const Duration(milliseconds: 800),
+                                const Duration(milliseconds: 800),
                             autoPlayCurve: Curves.fastOutSlowIn,
                             enlargeCenterPage: true,
                             scrollDirection: Axis.horizontal,
                             onPageChanged: (index, reason) {
                               setState(
-                                    () {
+                                () {
                                   _current = index;
                                 },
                               );
@@ -230,9 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsStoryScreen(
-                                              storyModel: storyModel),
+                                      builder: (context) => DetailsStoryScreen(
+                                          storyModel: storyModel),
                                     ),
                                   );
                                 },
