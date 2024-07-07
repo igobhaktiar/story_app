@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_story_app/core/utils/colors.dart';
@@ -20,6 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool? _obscureText = true;
 
   void _onRegister() {
     if (_formKey.currentState!.validate()) {
@@ -104,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         nameController: _emailController,
                         height: 80,
                         text: 'Email',
+                        inputType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Email is required';
@@ -116,6 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         nameController: _nameController,
                         height: 80,
                         text: 'Name',
+                        inputType: TextInputType.name,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Name is required';
@@ -140,6 +144,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         nameController: _passwordController,
                         height: 80,
                         text: 'Password',
+                        inputType: TextInputType.visiblePassword,
+                        obscureText: _obscureText,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText == true
+                                ? FluentIcons.eye_16_filled
+                                : FluentIcons.eye_off_16_filled,
+                            color: ColorsAssets.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText!;
+                            });
+                          },
+                        ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Password is required';

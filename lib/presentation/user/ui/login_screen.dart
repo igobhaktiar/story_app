@@ -1,10 +1,10 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_story_app/core/utils/colors.dart';
 import 'package:my_story_app/presentation/widget/tf_custom_widget.dart';
 import 'package:my_story_app/routes.dart';
-
 import '../bloc/user_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool? _obscureText = true;
 
   void _login() {
     if (_formKey.currentState?.validate() == true) {
@@ -103,12 +105,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
                       TfCustomWidget(
                         nameController: _passwordController,
                         text: 'Password',
+                        obscureText: _obscureText,
+                        inputType: TextInputType.visiblePassword,
                         height:
                             _formKey.currentState?.validate() == true ? 50 : 80,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText == true
+                                ? FluentIcons.eye_16_filled
+                                : FluentIcons.eye_off_16_filled,
+                            color: ColorsAssets.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText!;
+                            });
+                          },
+                        ),
                         validator: (value) {
                           if (value?.isEmpty ?? true) {
                             return 'Please enter your password';
