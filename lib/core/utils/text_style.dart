@@ -37,6 +37,22 @@ TextStyle inputTextStyle = const TextStyle(
   fontWeight: FontWeight.w400,
 );
 
+
+TextStyle inputTitleTextStyle = const TextStyle(
+  color: ColorsAssets.white,
+  fontSize: 24,
+  fontWeight: FontWeight.w400,
+);
+
+
+
+TextStyle inputHintTitleTextStyle = const TextStyle(
+  color: ColorsAssets.grey,
+  fontSize: 24,
+  fontWeight: FontWeight.w400,
+);
+
+
 TextStyle hintTextStyle = const TextStyle(
   color: ColorsAssets.grey,
   fontSize: 16,
