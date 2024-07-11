@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,66 @@ class WriteStoryScreen extends StatefulWidget {
 
 class _WriteStoryScreenState extends State<WriteStoryScreen> {
   String date = DateFormat('MMMM dd kk:mm').format(DateTime.now());
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _storyController = TextEditingController();
+
+  void _boldText() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText = value.replaceRange(start, end, '**$selectedText**');
+    _storyController.text = newText;
+  }
+
+  void _italicText() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText = value.replaceRange(start, end, '*$selectedText*');
+    _storyController.text = newText;
+  }
+
+  void _underlineText() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText =
+        value.replaceRange(start, end, '<u>$selectedText</u>');
+    _storyController.text = newText;
+  }
+
+  void _alignLeft() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText =
+        value.replaceRange(start, end, '<p align="left">$selectedText</p>');
+    _storyController.text = newText;
+  }
+
+  void _alignCenter() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText =
+        value.replaceRange(start, end, '<p align="center">$selectedText</p>');
+    _storyController.text = newText;
+  }
+
+  void _alignRight() {
+    final String value = _storyController.text;
+    final int start = _storyController.selection.start;
+    final int end = _storyController.selection.end;
+    final String selectedText = value.substring(start, end);
+    final String newText =
+        value.replaceRange(start, end, '<p align="right">$selectedText</p>');
+    _storyController.text = newText;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +80,18 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
       backgroundColor: ColorsAssets.primary,
       appBar: AppBar(
         backgroundColor: ColorsAssets.primary,
-        title: Text(
-          'Write Story',
-          style: appBarTitleTextStyle,
+        title: Row(
+          children: [
+            Text(
+              'Write Story',
+              style: appBarTitleTextStyle,
+            ),
+            const SizedBox(width: 8),
+            const Icon(
+              FluentIcons.edit_20_regular,
+              color: ColorsAssets.white,
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -40,6 +110,7 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      controller: _titleController,
                       style: inputTitleTextStyle,
                       decoration: InputDecoration(
                         hintText: 'Story Title...',
@@ -56,54 +127,54 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
                     const SizedBox(height: 16),
                     Expanded(
                       child: TextField(
-                        style: inputTextStyle,
+                        controller: _storyController,
                         decoration: InputDecoration(
                           hintText: 'Write your story here...',
                           hintStyle: hintTextStyle,
                           border: InputBorder.none,
                         ),
-                        maxLines: 10,
+                        maxLines: null,
                       ),
                     ),
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _boldText,
                           icon: const Icon(
                             Icons.format_bold,
                             color: ColorsAssets.white,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _italicText,
                           icon: const Icon(
                             Icons.format_italic,
                             color: ColorsAssets.white,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _underlineText,
                           icon: const Icon(
                             Icons.format_underline,
                             color: ColorsAssets.white,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _alignLeft,
                           icon: const Icon(
                             Icons.format_align_left,
                             color: ColorsAssets.white,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _alignCenter,
                           icon: const Icon(
                             Icons.format_align_center,
                             color: ColorsAssets.white,
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: _alignRight,
                           icon: const Icon(
                             Icons.format_align_right,
                             color: ColorsAssets.white,
