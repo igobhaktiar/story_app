@@ -1,5 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:intl/intl.dart';
 import '../../../core/utils/colors.dart';
@@ -14,65 +15,15 @@ class WriteStoryScreen extends StatefulWidget {
 class _WriteStoryScreenState extends State<WriteStoryScreen> {
   String date = DateFormat('MMMM dd kk:mm').format(DateTime.now());
   final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _storyController = TextEditingController();
+  final QuillController _storyController = QuillController.basic();
 
-  void _boldText() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText = value.replaceRange(start, end, '**$selectedText**');
-    _storyController.text = newText;
-  }
-
-  void _italicText() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText = value.replaceRange(start, end, '*$selectedText*');
-    _storyController.text = newText;
-  }
-
-  void _underlineText() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText =
-        value.replaceRange(start, end, '<u>$selectedText</u>');
-    _storyController.text = newText;
-  }
-
-  void _alignLeft() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText =
-        value.replaceRange(start, end, '<p align="left">$selectedText</p>');
-    _storyController.text = newText;
-  }
-
-  void _alignCenter() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText =
-        value.replaceRange(start, end, '<p align="center">$selectedText</p>');
-    _storyController.text = newText;
-  }
-
-  void _alignRight() {
-    final String value = _storyController.text;
-    final int start = _storyController.selection.start;
-    final int end = _storyController.selection.end;
-    final String selectedText = value.substring(start, end);
-    final String newText =
-        value.replaceRange(start, end, '<p align="right">$selectedText</p>');
-    _storyController.text = newText;
-  }
+  final FocusNode _focusNode = FocusNode(
+    descendantsAreFocusable: true,
+    canRequestFocus: true,
+  );
+  final ScrollController _scrollController = ScrollController(
+    keepScrollOffset: true,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -103,84 +54,84 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
                 padding: const EdgeInsets.all(16),
                 height: MediaQuery.of(context).size.height * 0.7,
                 decoration: BoxDecoration(
-                  color: ColorsAssets.eerieBlack.withOpacity(0.5),
+                  color: ColorsAssets.white,
                   borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorsAssets.gunmetal.withOpacity(0.2),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
                       controller: _titleController,
-                      style: inputTitleTextStyle,
+                      style: inputTitleTextStyle.copyWith(
+                        color: ColorsAssets.black,
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Story Title...',
-                        hintStyle: inputHintTitleTextStyle,
+                        hintStyle: inputHintTitleTextStyle.copyWith(
+                          color: ColorsAssets.grey.withOpacity(0.5),
+                        ),
                         focusColor: ColorsAssets.grey,
                         fillColor: ColorsAssets.grey,
                         border: InputBorder.none,
                       ),
                     ),
-                    Text(
-                      date,
-                      style: bodyTextStyle,
-                    ),
+                    Text(date,
+                        style: bodyTextStyle.copyWith(
+                          color: ColorsAssets.grey,
+                        )),
                     const SizedBox(height: 16),
                     Expanded(
-                      child: TextField(
-                        controller: _storyController,
-                        decoration: InputDecoration(
-                          hintText: 'Write your story here...',
-                          hintStyle: hintTextStyle,
-                          border: InputBorder.none,
+                      child: QuillEditor(
+                        configurations: QuillEditorConfigurations(
+                          controller: _storyController,
+                          placeholder: 'Write your story...',
                         ),
-                        maxLines: null,
+                        focusNode: _focusNode,
+                        scrollController: _scrollController,
                       ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: _boldText,
-                          icon: const Icon(
-                            Icons.format_bold,
-                            color: ColorsAssets.white,
-                          ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: QuillToolbar.simple(
+                        configurations: QuillSimpleToolbarConfigurations(
+                          controller: _storyController,
+                          showBoldButton: true,
+                          showItalicButton: true,
+                          showUnderLineButton: true,
+                          showStrikeThrough: true,
+                          showColorButton: false,
+                          showBackgroundColorButton: false,
+                          showClearFormat: false,
+                          showHeaderStyle: true,
+                          showRedo: false,
+                          showListNumbers: false,
+                          showListBullets: false,
+                          showCodeBlock: false,
+                          showQuote: false,
+                          showLink: false,
+                          showJustifyAlignment: false,
+                          showIndent: false,
+                          showClipboardCopy: false,
+                          showClipboardCut: false,
+                          showClipboardPaste: false,
+                          showDirection: false,
+                          showFontSize: false,
+                          showFontFamily: false,
+                          showDividers: false,
+                          showInlineCode: false,
+                          showSubscript: false,
+                          showSuperscript: false,
+                          showListCheck: false,
+                          showSearchButton: false,
                         ),
-                        IconButton(
-                          onPressed: _italicText,
-                          icon: const Icon(
-                            Icons.format_italic,
-                            color: ColorsAssets.white,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: _underlineText,
-                          icon: const Icon(
-                            Icons.format_underline,
-                            color: ColorsAssets.white,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: _alignLeft,
-                          icon: const Icon(
-                            Icons.format_align_left,
-                            color: ColorsAssets.white,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: _alignCenter,
-                          icon: const Icon(
-                            Icons.format_align_center,
-                            color: ColorsAssets.white,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: _alignRight,
-                          icon: const Icon(
-                            Icons.format_align_right,
-                            color: ColorsAssets.white,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
