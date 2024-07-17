@@ -3,6 +3,8 @@ import 'package:my_story_app/core/utils/url.dart';
 import 'package:my_story_app/data/model/story_model.dart';
 import 'dart:convert';
 
+import 'package:my_story_app/domain/usecases/user_usecase.dart';
+
 class NetworkStoryDataSource {
   final Dio dio;
 
@@ -55,6 +57,25 @@ class NetworkStoryDataSource {
       return StoryModel.fromJson(response.data);
     } else {
       throw Exception('Failed to update story');
+    }
+  }
+
+  Future<StoryModel> createStory(StoryModel story) async {
+    var userData = await UserUseCase().getUserData();
+
+    var url = '$baseUrl/users/${userData.id}/storylist';
+
+    var body = jsonEncode({
+      'writer': userData.name,
+      'title': story.title,
+      'story': story.story,
+    });
+
+    var response = await dio.post(url, data: body);
+    if (response.statusCode == 201) {
+      return StoryModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to create story');
     }
   }
 }

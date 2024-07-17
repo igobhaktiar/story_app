@@ -21,4 +21,9 @@ class StoryRepositoryImpl implements StoryRepository {
   Future<StoryModel> updateStory(StoryModel story) {
     return networkStoryDataSource.updateStory(story);
   }
+
+  @override
+  Future<StoryModel> createStory(StoryModel story) {
+    return networkStoryDataSource.createStory(story);
+  }
 }

@@ -16,3 +16,9 @@ class StoryUpdateEvent extends StoryEvent {
 
   StoryUpdateEvent(this.story);
 }
+
+class StoryCreateEvent extends StoryEvent {
+  final StoryModel story;
+
+  StoryCreateEvent(this.story);
+}

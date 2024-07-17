@@ -53,15 +53,19 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   // Handle the bottom navigation bar item tap
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       controller = index;
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void _refresh() {
+    context.read<StoryBloc>().add(StoryFetchEvent());
   }
 
   @override
@@ -77,12 +81,19 @@ class _MainScreenState extends State<MainScreen> {
                 textColor: Colors.white,
               );
             } else if (state is StoryUpdated) {
-              context.read<StoryBloc>().add(StoryFetchEvent());
               toastWidget(
-                message: 'Success',
+                message: 'Story Updated',
                 color: ColorsAssets.success,
                 textColor: Colors.white,
               );
+              _refresh();
+            } else if (state is StoryCreated) {
+              toastWidget(
+                message: 'Story Published',
+                color: ColorsAssets.success,
+                textColor: Colors.white,
+              );
+              _refresh();
             }
           },
         ),

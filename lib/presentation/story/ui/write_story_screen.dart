@@ -1,8 +1,11 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:my_story_app/core/utils/text_style.dart';
 import 'package:intl/intl.dart';
+import 'package:my_story_app/data/model/story_model.dart';
+import 'package:my_story_app/presentation/story/bloc/story_bloc/story_bloc.dart';
 import '../../../core/utils/colors.dart';
 
 class WriteStoryScreen extends StatefulWidget {
@@ -24,6 +27,30 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
   final ScrollController _scrollController = ScrollController(
     keepScrollOffset: true,
   );
+
+  void _publishStory() {
+    final title = _titleController.text;
+    final story = _storyController.document.toPlainText();
+
+    if (title.isEmpty || story.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Title and story cannot be empty'),
+        ),
+      );
+    } else {
+      // Call createStory from StoryUseCase
+      context.read<StoryBloc>().add(
+            StoryCreateEvent(
+              StoryModel(
+                title: title,
+                story: story,
+                comments: [],
+              ),
+            ),
+          );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +167,7 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _publishStory,
                   style: ButtonStyle(
                     backgroundColor:
                         WidgetStateProperty.all(ColorsAssets.secondary),

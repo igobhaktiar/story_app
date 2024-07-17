@@ -16,4 +16,8 @@ class StoryUseCase {
   Future<StoryModel> updateStory(StoryModel story) {
     return storyRepository.updateStory(story);
   }
+
+  Future<StoryModel> createStory(StoryModel story) {
+    return storyRepository.createStory(story);
+  }
 }

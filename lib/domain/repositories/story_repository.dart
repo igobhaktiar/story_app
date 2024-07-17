@@ -4,4 +4,5 @@ abstract class StoryRepository {
   Future<List<StoryModel>> getStories();
   Future<List<StoryModel>> getUserStories(String userId);
   Future<StoryModel> updateStory(StoryModel story);
+  Future<StoryModel> createStory(StoryModel story);
 }
