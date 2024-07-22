@@ -14,6 +14,8 @@ import 'package:my_story_app/presentation/story/ui/details_story_screen.dart';
 import 'package:my_story_app/routes.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../widget/gradient_custom_widget.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -63,19 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
-              height: 100,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    ColorsAssets.raisinBlack,
-                    ColorsAssets.primary,
-                  ],
-                ),
-              ),
-            ),
+            const GradientCustomWidget(),
             Padding(
               padding: const EdgeInsets.all(24),
               child: BlocBuilder<StoryBloc, StoryState>(

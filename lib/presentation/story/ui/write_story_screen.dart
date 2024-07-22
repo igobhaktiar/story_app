@@ -164,27 +164,35 @@ class _WriteStoryScreenState extends State<WriteStoryScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _publishStory,
-                  style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStateProperty.all(ColorsAssets.secondary),
-                    padding: WidgetStateProperty.all(
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    ),
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+              BlocBuilder<StoryBloc, StoryState>(
+                builder: (context, state) {
+                  if (state is StoryLoading) {
+                    return const CircularProgressIndicator();
+                  }
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _publishStory,
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all(ColorsAssets.secondary),
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                        ),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Publish',
+                        style: buttonTextStyle,
                       ),
                     ),
-                  ),
-                  child: Text(
-                    'Publish',
-                    style: buttonTextStyle,
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
